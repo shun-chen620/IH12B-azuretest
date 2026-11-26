@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ひとこと掲示板</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 0 16px; }
+        form { background: #f0f4f8; padding: 16px; border-radius: 8px; }
+        input, textarea { width: 100%; margin-bottom: 8px; padding: 8px; box-sizing: border-box; }
+        button { padding: 8px 24px; background: #0078d4; color: white; border: none; border-radius: 4px; }
+        .message { border-bottom: 1px solid #ddd; padding: 12px 0; }
+        .name { font-weight: bold; color: #0078d4; }
+        .time { color: #888; font-size: 0.9em; margin-left: 8px; }
+    </style>
+</head>
+<body>
+    <h1>ひとこと掲示板</h1>
+
+    <form action="/post" method="post">
+        <input type="text" name="name" placeholder="名前（省略可）">
+        <textarea name="message" placeholder="メッセージ" required></textarea>
+        <button type="submit">投稿する</button>
+    </form>
+
+    <h2>投稿一覧（{{ messages|length }}件）</h2>
+
+    {% for m in messages %}
+    <div class="message">
+        <div><span class="name">{{ m.name }}</span><span class="time">{{ m.posted_at }}</span></div>
+        <div>{{ m.text }}</div>
+    </div>
+    {% else %}
+    <p>まだ投稿がありません</p>
+    {% endfor %}
+</body>
+</html>
